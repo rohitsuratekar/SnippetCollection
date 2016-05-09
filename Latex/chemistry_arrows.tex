@@ -1,0 +1,129 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{chemfig,chemformula}
+
+%Original code from http://tex.stackexchange.com/questions/160556/getting-double-headed-arrows-with-curly-arrow-above
+
+
+\makeatletter
+\definearrow{7}{<doubleUp>}{%
+	% offset:
+	\CF@arrow@shift@nodes{#5}%
+	% coordinates for equilibrium arrows:
+	\ifx\@empty#4\@empty
+	\else
+	\pgfmathsetmacro\CF@tmp@stra{(1-#4)/2}%
+	\pgfmathsetmacro\CF@tmp@strb{(1-#4)/2+#4}%
+	\fi
+	\edef\CF@tmp@str{%
+		\noexpand\path[allow upside down](\CF@arrow@start@node)--(\CF@arrow@end@node)
+		node[pos=0,sloped,yshift=1pt](\CF@arrow@start@node @u0){}
+		node[pos=\ifx\@empty#4\@empty0\else\CF@tmp@stra\fi,sloped,yshift=-1pt]
+		(\CF@arrow@start@node @d0){}
+		node[pos=1,sloped,yshift=1pt](\CF@arrow@start@node @u1){}
+		node[pos=\ifx\@empty#4\@empty1\else\CF@tmp@strb\fi,sloped,yshift=-1pt]
+		(\CF@arrow@start@node @d1){};%
+	}\CF@tmp@str
+	% draw main arrows:
+	\expandafter\draw\expandafter[\CF@arrow@current@style,-CF@half]
+	(\CF@arrow@start@node @u0)--(\CF@arrow@start@node @u1)node[midway](yarrow@arctangent){};%
+	\expandafter\draw\expandafter[\CF@arrow@current@style,CF@half-]
+	(\CF@arrow@start@node @d0)--(\CF@arrow@start@node @d1);% is there label #1?
+	\edef\CF@tmp@str{\ifx\@empty#1\@empty[draw=none]\fi}%
+	% if yes draw left half of arc:
+	\expandafter\draw\CF@tmp@str (yarrow@arctangent)%
+	arc[
+	radius=\CF@compound@sep*\CF@current@arrow@length*\ifx\@empty#6\@empty0.333\else#6\fi,
+	start angle=\CF@arrow@current@angle-90,
+	delta angle=-\ifx\@empty#7\@empty60\else#7\fi
+	]
+	node(yarrow@start){};
+	% is there label #2?
+	\edef\CF@tmp@str{[\ifx\@empty#2\@empty draw=none,\fi-CF@full]}%
+	% if yes draw secon half of arc:
+	\expandafter\draw\CF@tmp@str (yarrow@arctangent)%
+	arc[
+	radius=\CF@compound@sep*\CF@current@arrow@length*\ifx\@empty#6\@empty0.333\else#6\fi,
+	start angle=\CF@arrow@current@angle-90,
+	delta angle=\ifx\@empty#7\@empty60\else#7\fi
+	]
+	node(yarrow@end){};
+	% place the labels - we need to no the sign of the offset here:
+	\edef\CF@tmp@str{\if\string-\expandafter\@car\detokenize{#5.}\@nil-\else+\fi}%
+	% place the labels #1 and #2:
+	\CF@arrow@display@label{#1}{0}{\CF@tmp@str}{yarrow@start}{#2}{1}{\CF@tmp@str}{yarrow@end}%
+	% place label #3:
+	\CF@arrow@display@label{#3}{0.5}{-}{\CF@arrow@start@node}{}{}{}{\CF@arrow@end@node}%
+}
+\makeatother
+
+\makeatletter
+\definearrow{7}{<singleUp>}{%
+	% offset:
+	\CF@arrow@shift@nodes{#5}%
+	% coordinates for equilibrium arrows:
+	\ifx\@empty#4\@empty
+	\else
+	\pgfmathsetmacro\CF@tmp@stra{(1-#4)/2}%
+	%\pgfmathsetmacro\CF@tmp@strb{(1-#4)/2+#4}%
+	\fi
+	\edef\CF@tmp@str{%
+		\noexpand\path[allow upside down](\CF@arrow@start@node)--(\CF@arrow@end@node)
+		node[pos=0,sloped,yshift=1pt](\CF@arrow@start@node @u0){}
+		node[pos=\ifx\@empty#4\@empty0\else\CF@tmp@stra\fi,sloped,yshift=-1pt]
+		(\CF@arrow@start@node @d0){}
+		node[pos=1,sloped,yshift=1pt](\CF@arrow@start@node @u1){}
+		node[pos=\ifx\@empty#4\@empty1\else\CF@tmp@strb\fi,sloped,yshift=-1pt]
+		(\CF@arrow@start@node @d1){};%
+	}\CF@tmp@str
+	% draw main arrows:
+	\expandafter\draw\expandafter[\CF@arrow@current@style,-CF@full]
+	(\CF@arrow@start@node @u0)--(\CF@arrow@start@node @u1)node[midway](yarrow@arctangent){};%
+	(\CF@arrow@start@node @d0)--(\CF@arrow@start@node @d1);% is there label #1?
+	\edef\CF@tmp@str{\ifx\@empty#1\@empty[draw=none]\fi}%
+	% if yes draw left half of arc:
+	\expandafter\draw\CF@tmp@str (yarrow@arctangent)%
+	arc[
+	radius=\CF@compound@sep*\CF@current@arrow@length*\ifx\@empty#6\@empty0.333\else#6\fi,
+	start angle=\CF@arrow@current@angle-90,
+	delta angle=-\ifx\@empty#7\@empty60\else#7\fi
+	]
+	node(yarrow@start){};
+	% is there label #2?
+	\edef\CF@tmp@str{[\ifx\@empty#2\@empty draw=none,\fi-CF@full]}%
+	% if yes draw secon half of arc:
+	\expandafter\draw\CF@tmp@str (yarrow@arctangent)%
+	arc[
+	radius=\CF@compound@sep*\CF@current@arrow@length*\ifx\@empty#6\@empty0.333\else#6\fi,
+	start angle=\CF@arrow@current@angle-90,
+	delta angle=\ifx\@empty#7\@empty60\else#7\fi
+	]
+	node(yarrow@end){};
+	% place the labels - we need to no the sign of the offset here:
+	\edef\CF@tmp@str{\if\string-\expandafter\@car\detokenize{#5.}\@nil-\else+\fi}%
+	% place the labels #1 and #2:
+	\CF@arrow@display@label{#1}{0}{\CF@tmp@str}{yarrow@start}{#2}{1}{\CF@tmp@str}{yarrow@end}%
+	% place label #3:
+	\CF@arrow@display@label{#3}{0.5}{-}{\CF@arrow@start@node}{}{}{}{\CF@arrow@end@node}%
+}
+\makeatother
+
+
+\begin{document}
+	
+	
+	\schemestart
+	\ch{[A]}
+	\arrow{<doubleUp>[][\ch{H2O}]}
+	\ch{[B]}
+	\arrow{->[$\Delta$]}
+	\ch{[C]}
+	\arrow{<=>[\ch{k_f}][\ch{k_r}]}
+	\ch{[D]}
+	\arrow{<singleUp>[\ch{H2}]}
+	\ch{E v}
+	\schemestop 
+	
+	
+\end{document}
+
