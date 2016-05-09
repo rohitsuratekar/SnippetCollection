@@ -1,3 +1,6 @@
-# SnippetCollection
-Small code snippet for daily use. </br>
-These are all codes I used in my programs someday. These are ready to use code can be used as copy and paste. 
+# Latex
+
+## Custom chemistry arrows [<a href = https://github.com/rohitsuratekar/SnippetCollection/blob/master/Latex/chemistry_arrows.tex> code </a>]
+
+![Alt text](https://cloud.githubusercontent.com/assets/8757115/15104534/550d0a5a-15d7-11e6-87a6-6c592845ab05.png "Optional title")
+
