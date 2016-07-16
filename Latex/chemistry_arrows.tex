@@ -6,7 +6,7 @@
 
 
 \makeatletter
-\definearrow{7}{<doubleUp>}{%
+\definearrow{7}{<double>}{%
 	% offset:
 	\CF@arrow@shift@nodes{#5}%
 	% coordinates for equilibrium arrows:
@@ -58,14 +58,14 @@
 \makeatother
 
 \makeatletter
-\definearrow{7}{<singleUp>}{%
+\definearrow{7}{<single>}{%
 	% offset:
 	\CF@arrow@shift@nodes{#5}%
 	% coordinates for equilibrium arrows:
 	\ifx\@empty#4\@empty
 	\else
 	\pgfmathsetmacro\CF@tmp@stra{(1-#4)/2}%
-	%\pgfmathsetmacro\CF@tmp@strb{(1-#4)/2+#4}%
+	\pgfmathsetmacro\CF@tmp@strb{(1-#4)/2+#4}%
 	\fi
 	\edef\CF@tmp@str{%
 		\noexpand\path[allow upside down](\CF@arrow@start@node)--(\CF@arrow@end@node)
@@ -109,18 +109,19 @@
 \makeatother
 
 
+
 \begin{document}
 	
 	
 	\schemestart
 	\ch{[A]}
-	\arrow{<doubleUp>[][\ch{H2O}]}
+	\arrow{<double>[][\ch{H2O}]}
 	\ch{[B]}
-	\arrow{->[$\Delta$]}
+	\arrow{<single>[][\ch{ATP}]}
 	\ch{[C]}
-	\arrow{<=>[\ch{k_f}][\ch{k_r}]}
+	\arrow{<double>[\ch{Zn^{++}}]}
 	\ch{[D]}
-	\arrow{<singleUp>[\ch{H2}]}
+	\arrow{<single>[\ch{H2}]}
 	\ch{E v}
 	\schemestop 
 	

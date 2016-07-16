@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{tabularx} %Needed for tables
+\usepackage{calc} %Needed for center text in tables
+\usepackage{caption} %Needed for new line in caption
+\begin{document}
+	
+	
+	\begin{table}
+		\centering
+		\caption{\textbf{Table example } \\ this is new line for caption\label{other_data}}
+		
+		\begin{tabular}{| >{\centering\arraybackslash}m{3cm} | >{\centering\arraybackslash}m{3cm} | >{\centering\arraybackslash}m{4cm} |}
+			\hline
+			\textbf {Enzyme} $\uparrow$ & \textbf{Observation} & \textbf {Case 1 explains}\parbox{0pt}{\rule{0pt}{2ex+\baselineskip}}\\ \hline 
+			E1  & total A & No \\[0ex] \hline
+			E1  & total A & Some very large text \parbox{0pt}{\rule{0pt}{2ex+\baselineskip}}\\\hline
+			\end{tabular}
+		
+		
+	\end{table} 
+	
+	
+\end{document}
