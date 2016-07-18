@@ -2,11 +2,14 @@
 \usepackage{tabularx} %Needed for tables
 \usepackage{calc} %Needed for center text in tables
 \usepackage{caption} %Needed for new line in caption
+\usepackage{threeparttable} %Needed for footnotes in table
 \begin{document}
 	
 	
 	\begin{table}
-		\centering
+		\centering %Keep centering before threeparttable
+		\begin{threeparttable}
+		\captionsetup{justification=centering,margin=2cm} %This will keep caption in centre
 		\caption{\textbf{Table example } \\ this is new line for caption\label{other_data}}
 		
 		\begin{tabular}{| >{\centering\arraybackslash}m{3cm} | >{\centering\arraybackslash}m{3cm} | >{\centering\arraybackslash}m{4cm} |}
@@ -15,7 +18,12 @@
 			E1  & total A & No \\[0ex] \hline
 			E1  & total A & Some very large text \parbox{0pt}{\rule{0pt}{2ex+\baselineskip}}\\\hline
 			\end{tabular}
-		
+			\begin{tablenotes}
+				\item[$\ast$] {\footnotesize This is footnote 1}
+				\item[$\ast\ast$] {\footnotesize This is footnote 2}
+			\end{tablenotes}
+			
+		\end{threeparttable}
 		
 	\end{table} 
 	

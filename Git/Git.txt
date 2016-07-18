@@ -1,0 +1,10 @@
+# Resets index to former commit
+git reset xyz 
+
+# Moves pointer back to previous HEAD
+git reset --soft HEAD@{1}
+
+git commit -m "Revert to xyz"
+
+# Updates working copy to reflect the new commit
+git reset --hard
